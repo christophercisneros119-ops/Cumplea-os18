@@ -17,12 +17,6 @@ body {
 h1 { margin-top: 15px; }
 p { max-width: 600px; margin: auto; }
 
-input, button {
-  margin: 8px;
-  padding: 8px;
-  font-size: 1em;
-}
-
 #universe {
   position: relative;
   width: 100vw;
@@ -98,16 +92,8 @@ No eres solo mi amigo, eres mi hermano.
 Nuestros recuerdos giran juntos, como planetas en el espacio 🌌
 </p>
 
-<h3>🎶 Música</h3>
-<p><small>Sube el MP3 de “Más Alta Que Bajada – Natanael Cano”</small></p>
-<input type="file" accept="audio/*" onchange="cargarMusica(event)">
-<br>
-<audio id="audio" controls></audio>
-<br>
-<button onclick="abrirSpotify()">🎧 Abrir en Spotify</button>
-
-<h3>📸 Fotos</h3>
-<input type="file" accept="image/*" multiple onchange="crearPlanetas(event)">
+<!-- 🎶 Música automática -->
+<audio id="audio" src="musica.mp3" autoplay loop></audio>
 
 <div id="universe"></div>
 
@@ -117,29 +103,30 @@ Nuestros recuerdos giran juntos, como planetas en el espacio 🌌
 </div>
 
 <script>
-function crearPlanetas(event) {
-  const universe = document.getElementById("universe");
-  const files = event.target.files;
+const fotos = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
 
-  for (let i = 0; i < files.length; i++) {
+function crearPlanetas() {
+  const universe = document.getElementById("universe");
+
+  fotos.forEach((src, i) => {
     const orbit = document.createElement("div");
     orbit.className = "orbit";
 
-    const size = 150 + i * 60;
+    const size = 150 + i * 80;
     orbit.style.width = size + "px";
     orbit.style.height = size + "px";
     orbit.style.marginLeft = -(size/2) + "px";
     orbit.style.marginTop = -(size/2) + "px";
-    orbit.style.animationDuration = (10 + i * 4) + "s";
+    orbit.style.animationDuration = (12 + i * 4) + "s";
 
     const planet = document.createElement("img");
-    planet.src = URL.createObjectURL(files[i]);
+    planet.src = src;
     planet.className = "planet";
-    planet.onclick = () => abrirModal(planet.src);
+    planet.onclick = () => abrirModal(src);
 
     orbit.appendChild(planet);
     universe.appendChild(orbit);
-  }
+  });
 }
 
 function abrirModal(src) {
@@ -149,17 +136,6 @@ function abrirModal(src) {
 
 function cerrarModal() {
   document.getElementById("modal").style.display = "none";
-}
-
-function cargarMusica(event) {
-  const audio = document.getElementById("audio");
-  audio.src = URL.createObjectURL(event.target.files[0]);
-  audio.volume = 0.9;
-  audio.play();
-}
-
-function abrirSpotify() {
-  window.open("https://open.spotify.com/search/Más%20Alta%20Que%20Bajada%20Natanael%20Cano", "_blank");
 }
 
 /* Confeti */
@@ -172,7 +148,9 @@ function confeti() {
   document.body.appendChild(c);
   setTimeout(()=>c.remove(),5000);
 }
+
 setInterval(confeti, 250);
+crearPlanetas();
 </script>
 
 </body>
