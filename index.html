@@ -29,6 +29,7 @@ p { max-width: 600px; margin: auto; }
   left: 50%;
   border-radius: 50%;
   animation: spin linear infinite;
+  pointer-events: none; /* Evita bloquear clics */
 }
 
 @keyframes spin {
@@ -47,6 +48,7 @@ p { max-width: 600px; margin: auto; }
   object-fit: cover;
   cursor: pointer;
   box-shadow: 0 0 20px rgba(255,255,255,0.8);
+  pointer-events: auto; /* Permite clic en las fotos */
 }
 
 /* Modal */
@@ -103,7 +105,13 @@ Nuestros recuerdos giran juntos, como planetas en el espacio 🌌
 </div>
 
 <script>
-const fotos = ["20251108_175653.jpg", "IMG-20251224-WA0025.jpg", "Screenshot_20251218_195810_Gallery.jpg"];
+const fotos = [
+  "20251108_175653.jpg",
+  "IMG-20251224-WA0025.jpg",
+  "Screenshot_20251218_195810_Gallery.jpg",
+  "foto4.jpg",      // Cambia estos nombres por tus archivos reales
+  "foto5.jpg"
+];
 
 function crearPlanetas() {
   const universe = document.getElementById("universe");
