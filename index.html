@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Feliz Cumpleaños 🌌</title>
+
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #0b0d2b, #000);
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+h1 { margin-top: 15px; }
+p { max-width: 600px; margin: auto; }
+
+input, button {
+  margin: 8px;
+  padding: 8px;
+  font-size: 1em;
+}
+
+#universe {
+  position: relative;
+  width: 100vw;
+  height: 70vh;
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  animation: spin linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.planet {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+
+/* Modal */
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 15px;
+}
+
+/* Confeti */
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎂 Feliz Cumpleaños 🪐</h1>
+<p>
+No eres solo mi amigo, eres mi hermano.  
+Nuestros recuerdos giran juntos, como planetas en el espacio 🌌
+</p>
+
+<h3>🎶 Música</h3>
+<p><small>Sube el MP3 de “Más Alta Que Bajada – Natanael Cano”</small></p>
+<input type="file" accept="audio/*" onchange="cargarMusica(event)">
+<br>
+<audio id="audio" controls></audio>
+<br>
+<button onclick="abrirSpotify()">🎧 Abrir en Spotify</button>
+
+<h3>📸 Fotos</h3>
+<input type="file" accept="image/*" multiple onchange="crearPlanetas(event)">
+
+<div id="universe"></div>
+
+<!-- Modal -->
+<div id="modal" onclick="cerrarModal()">
+  <img id="modalImg">
+</div>
+
+<script>
+function crearPlanetas(event) {
+  const universe = document.getElementById("universe");
+  const files = event.target.files;
+
+  for (let i = 0; i < files.length; i++) {
+    const orbit = document.createElement("div");
+    orbit.className = "orbit";
+
+    const size = 150 + i * 60;
+    orbit.style.width = size + "px";
+    orbit.style.height = size + "px";
+    orbit.style.marginLeft = -(size/2) + "px";
+    orbit.style.marginTop = -(size/2) + "px";
+    orbit.style.animationDuration = (10 + i * 4) + "s";
+
+    const planet = document.createElement("img");
+    planet.src = URL.createObjectURL(files[i]);
+    planet.className = "planet";
+    planet.onclick = () => abrirModal(planet.src);
+
+    orbit.appendChild(planet);
+    universe.appendChild(orbit);
+  }
+}
+
+function abrirModal(src) {
+  document.getElementById("modalImg").src = src;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function cerrarModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+function cargarMusica(event) {
+  const audio = document.getElementById("audio");
+  audio.src = URL.createObjectURL(event.target.files[0]);
+  audio.volume = 0.9;
+  audio.play();
+}
+
+function abrirSpotify() {
+  window.open("https://open.spotify.com/search/Más%20Alta%20Que%20Bajada%20Natanael%20Cano", "_blank");
+}
+
+/* Confeti */
+function confeti() {
+  const c = document.createElement("div");
+  c.className = "confetti";
+  c.style.left = Math.random() * window.innerWidth + "px";
+  c.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+  c.style.animationDuration = (Math.random()*3+2)+"s";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),5000);
+}
+setInterval(confeti, 250);
+</script>
+
+</body>
+</html>
