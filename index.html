@@ -83,6 +83,24 @@ p { max-width: 600px; margin: auto; }
 @keyframes fall {
   to { transform: translateY(110vh) rotate(360deg); }
 }
+
+/* Estilos para videos de YouTube */
+#ytContainer {
+  position: fixed;
+  bottom: 10px;
+  right: 10px; /* Cambia a left:10px; si prefieres la izquierda */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 20;
+}
+
+.ytPlayer {
+  width: 320px;   /* ancho visible del video */
+  height: 180px;  /* altura visible del video */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
 </style>
 </head>
 
@@ -109,8 +127,8 @@ const fotos = [
   "20251108_175653.jpg",
   "IMG-20251224-WA0025.jpg",
   "Screenshot_20251218_195810_Gallery.jpg",
-  "IMG_20251108_212018_198.jpg",      // Cambia estos nombres por tus archivos reales
-  "Screenshot_20251224_151059_Instagram.jpg"
+  "foto4.jpg",      // Cambia estos nombres por tus archivos reales
+  "foto5.jpg"
 ];
 
 function crearPlanetas() {
@@ -160,6 +178,29 @@ function confeti() {
 setInterval(confeti, 250);
 crearPlanetas();
 </script>
+
+<!-- Contenedor videos YouTube en esquina inferior derecha -->
+<div id="ytContainer">
+  <!-- Más Alta Que Bajada - Natanael Cano -->
+  <iframe
+    class="ytPlayer"
+    src="https://www.youtube.com/embed/gCpOZMHvnRA?autoplay=1&loop=1&playlist=gCpOZMHvnRA&controls=1&mute=0&modestbranding=1"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+    title="Más Alta Que Bajada"
+  ></iframe>
+
+  <!-- Feliz Cumpleaños -->
+  <iframe
+    class="ytPlayer"
+    src="https://www.youtube.com/embed/5eRc8Kzv-z4?autoplay=1&loop=1&playlist=5eRc8Kzv-z4&controls=1&mute=0&modestbranding=1"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+    title="Feliz Cumpleaños"
+  ></iframe>
+</div>
 
 </body>
 </html>
